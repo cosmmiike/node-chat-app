@@ -10,8 +10,29 @@ var server = http.createServer(app);
 var io = socketIO(server);
 
 app.use(express.static(publicPath));
+
 io.on('connection', function(socket) {
   console.log('New user connected');
+
+  // socket.emit('newEmail', {
+  //     from: 'mike@example.com',
+  //     text: 'Hey',
+  //     createdAt: 123
+  //   });
+  //
+  // socket.on('createEmail', function(newEmail) {
+  //   console.log('Create e-mail', newEmail);
+  // });
+
+    socket.emit('newMessage', {
+        from: 'mike@example.com',
+        text: 'Hey',
+        createdAt: 123
+      });
+
+    socket.on('createMessage', function(message) {
+      console.log('Create message', message);
+    });
 
   socket.on('disconnect', function() {
     console.log('User was disconnected');
@@ -19,5 +40,5 @@ io.on('connection', function(socket) {
 });
 
 server.listen(port, function() {
-  console.log('Server is up on port' + port);
+  console.log('Server is up on port ' + port);
 });
