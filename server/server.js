@@ -23,16 +23,21 @@ io.on('connection', function(socket) {
   // socket.on('createEmail', function(newEmail) {
   //   console.log('Create e-mail', newEmail);
   // });
+  //
+  // socket.emit('newMessage', {
+  //     from: 'mike@example.com',
+  //     text: 'Hey',
+  //     createdAt: 123
+  //   });
 
-    socket.emit('newMessage', {
-        from: 'mike@example.com',
-        text: 'Hey',
-        createdAt: 123
-      });
-
-    socket.on('createMessage', function(message) {
-      console.log('Create message', message);
+  socket.on('createMessage', function(message) {
+    console.log('Create message', message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
     });
+  });
 
   socket.on('disconnect', function() {
     console.log('User was disconnected');
