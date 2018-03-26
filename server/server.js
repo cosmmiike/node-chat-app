@@ -46,9 +46,10 @@ io.on('connection', function(socket) {
   //     createdAt: 123
   //   });
 
-  socket.on('createMessage', function(message) {
+  socket.on('createMessage', function(message, callback) {
     console.log('Create message', message);
     io.emit('newMessage', generateMessage(message.from, message.text));
+    callback('This is from the server');
 
     // io.emit('newMessage', {
     //   from: message.from,

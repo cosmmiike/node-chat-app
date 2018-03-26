@@ -7,7 +7,7 @@ socket.on('connect', function() {
   //   to: 'jen@example.com',
   //   text: 'Hey Hey'
   // });
-  // 
+  //
   // socket.emit('createMessage', {
   //   from: 'Mike',
   //   text: 'Hey Hey'
@@ -24,4 +24,25 @@ socket.on('disconnect', function() {
 
 socket.on('newMessage', function(message) {
   console.log('New message', message);
+  var li = $('<li></li>');
+  li.html('<b>' + message.from + '</b>: ' + message.text);
+  $('#messages').append(li);
+});
+
+// socket.emit('createMessage', {
+//   from: 'Frank',
+//   text: 'Hi'
+// }, function(callbackMsg) {
+//   console.log('Got it!', callbackMsg);
+// });
+
+$('#messages-form').on('submit', function (e) {
+  e.preventDefault();
+
+  socket.emit('createMessage', {
+    from: 'User',
+    text: $('[name=message]').val()
+  }, function() {
+
+  });
 });
